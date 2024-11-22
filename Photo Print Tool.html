@@ -18,20 +18,40 @@
             background-color: #94618E; /* Header background */
             color: #F4DECB; /* Header text color */
             text-align: center;
-            padding: 20px;
+            padding: 30px 20px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
 
         header h1 {
             margin: 0;
-            font-size: 28px;
+            font-size: 32px; /* Increased title size */
             font-weight: bold;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        header h1::after {
+            content: "";
+            display: block;
+            width: 50%;
+            height: 3px;
+            background-color: #F4DECB;
+            margin: 10px auto 0;
+            border-radius: 2px;
         }
 
         header p {
             margin: 5px 0 0;
             font-size: 16px;
             opacity: 0.9;
+        }
+
+        header img {
+            width: 90px; /* Slightly bigger icon */
+            height: 90px; /* Slightly bigger icon */
+            vertical-align: middle;
+            margin-bottom: 15px;
         }
 
         main {
@@ -77,6 +97,7 @@
             background-color: #94618E; /* Button background color */
             color: #F4DECB; /* Button text color */
             transition: all 0.3s ease;
+            display: none; /* Initially hide the print button */
         }
 
         button:hover {
@@ -89,7 +110,7 @@
             width: 297mm; /* A4 Landscape width */
             height: 210mm; /* A4 Landscape height */
             display: grid;
-            grid-template-columns: repeat(3, 90mm); /* Adjusted for 3.5in (width) */
+            grid-template-columns: repeat(3, 88.9mm); /* Adjusted grid width */
             grid-auto-rows: 63.5mm; /* Adjusted for 2.5in (height) */
             gap: 5mm; /* This will give space between photo slots */
             background-color: #F8EEE7; /* Page background */
@@ -114,6 +135,7 @@
             max-width: 100%;
             max-height: 100%;
             object-fit: cover; /* Ensures images fill the slot without distortion */
+            transition: transform 0.3s ease;
         }
 
         .page-gap {
@@ -166,11 +188,9 @@
 </head>
 <body>
     <header>
-        <h1>
-         <img src="https://raw.githubusercontent.com/Ayaanh001/Photos-printing-tool/refs/heads/main/Icon.png" 
-             alt="Logo"style="width: 40px; height: 40px; vertical-align: middle; margin-right: 10px;">
-            Wallet Size Photo Printer
-        </h1>
+        <img src="https://raw.githubusercontent.com/Ayaanh001/Photos-printing-tool/refs/heads/main/Icon.png" 
+             alt="Wallet Size Photo Printer Logo">
+        <h1>Wallet Size Photo Printer</h1>
         <p>Upload your photos, and they will be arranged in wallet size on A4 paper.</p>
     </header>
     <main>
@@ -178,7 +198,7 @@
             <!-- Custom File Input -->
             <label for="photo-input" class="custom-file-input">Select Photos</label>
             <input type="file" id="photo-input" accept="image/*" multiple>
-            <button onclick="window.print()">Print</button>
+            <button id="printButton" onclick="window.print()">Print</button>
         </div>
         <div id="photo-grid-container"></div>
     </main>
@@ -189,11 +209,18 @@
     <script>
         const photoInput = document.getElementById('photo-input');
         const photoGridContainer = document.getElementById('photo-grid-container');
+        const printButton = document.getElementById('printButton');
 
         photoInput.addEventListener('change', (event) => {
             const files = event.target.files;
             photoGridContainer.innerHTML = ''; // Clear previous images
+            printButton.style.display = 'none'; // Hide print button initially
+
             let currentPage;
+
+            if (files.length > 0) {
+                printButton.style.display = 'block'; // Show the print button if photos are selected
+            }
 
             for (let i = 0; i < files.length; i++) {
                 // Create a new page every 9 photos
@@ -215,6 +242,16 @@
                     slot.appendChild(img);
 
                     currentPage.appendChild(slot);
+
+                    // Check the orientation of the image and rotate if it's in portrait mode
+                    const tempImg = new Image();
+                    tempImg.src = e.target.result;
+                    tempImg.onload = () => {
+                        if (tempImg.height > tempImg.width) {
+                            img.style.transform = 'rotate(90deg)';
+                            img.style.objectFit = 'cover'; // Ensure it covers the space after rotation
+                        }
+                    };
                 };
 
                 reader.readAsDataURL(file);
