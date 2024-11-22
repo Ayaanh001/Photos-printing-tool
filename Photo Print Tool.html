@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallet Size Photo Printer</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #F8EEE7; /* Background color */
+            color: #49274A; /* Text color */
+        }
+
+        header {
+            background-color: #94618E; /* Header background */
+            color: #F4DECB; /* Header text color */
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        header p {
+            margin: 5px 0 0;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Hide default file input button */
+        .file-input-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input[type="file"] {
+            display: none; /* Hide the default file input */
+        }
+
+        .custom-file-input {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: 2px solid #94618E; /* Custom button border */
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #F4DECB; /* Custom button background */
+            color: #49274A; /* Text color for custom button */
+            transition: all 0.3s ease;
+        }
+
+        .custom-file-input:hover {
+            background-color: #49274A; /* Hover background color */
+            color: #F4DECB; /* Hover text color */
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #94618E; /* Button background color */
+            color: #F4DECB; /* Button text color */
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #49274A; /* Hover background color for button */
+            color: #F4DECB; /* Hover text color for button */
+        }
+
+        /* Photo Grid */
+        .page {
+            width: 297mm; /* A4 Landscape width */
+            height: 210mm; /* A4 Landscape height */
+            display: grid;
+            grid-template-columns: repeat(3, 90mm); /* Adjusted for 3.5in (width) */
+            grid-auto-rows: 63.5mm; /* Adjusted for 2.5in (height) */
+            gap: 5mm; /* This will give space between photo slots */
+            background-color: #F8EEE7; /* Page background */
+            border-radius: 10px;
+            box-sizing: border-box;
+            page-break-after: always; /* Ensures page break after each set of 9 photos */
+            margin: 0; /* Remove margin from the page */
+            padding: 0; /* Remove padding from the page */
+        }
+
+        .photo-slot {
+            border: 1px dashed #49274A; /* Border color for photo slots */
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #F4DECB; /* Background color for photo slot */
+            border-radius: 5px;
+        }
+
+        .photo-slot img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover; /* Ensures images fill the slot without distortion */
+        }
+
+        .page-gap {
+            margin-top: 10mm; /* Gap between pages for print */
+            page-break-before: always; /* Ensures new page starts after every 9 photos */
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 14px;
+            color: #49274A; /* Footer text color */
+            border-top: 1px solid #49274A; /* Footer border color */
+        }
+
+        footer span {
+            font-weight: bold;
+        }
+
+        /* Print Styling */
+        @media print {
+            body * {
+                visibility: visible; /* Hide everything except the page */
+            }
+
+            .page {
+                visibility: visible; /* Only show the grid with photos */
+                position: absolute;
+                top: 0;
+                left: 0;
+                margin: 0;
+                padding: 0;
+                page-break-after: always; /* Ensures new page after 9 photos */
+            }
+
+            .photo-slot {
+                border: none; /* Remove borders for clean printing */
+            }
+
+            .page-gap {
+                display: none; /* Remove page gap for printing */
+            }
+
+            .file-input-wrapper, button {
+                display: none; /* Hide buttons and input fields during print */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Wallet Size Photo Printer</h1>
+        <p>Upload your photos, and they will be arranged in wallet size on A4 paper.</p>
+    </header>
+    <main>
+        <div class="file-input-wrapper">
+            <!-- Custom File Input -->
+            <label for="photo-input" class="custom-file-input">Select Photos</label>
+            <input type="file" id="photo-input" accept="image/*" multiple>
+            <button onclick="window.print()">Print</button>
+        </div>
+        <div id="photo-grid-container"></div>
+    </main>
+    <footer>
+        Wallet Photo Printer by <span>Ayaan Hussain</span>
+    </footer>
+
+    <script>
+        const photoInput = document.getElementById('photo-input');
+        const photoGridContainer = document.getElementById('photo-grid-container');
+
+        photoInput.addEventListener('change', (event) => {
+            const files = event.target.files;
+            photoGridContainer.innerHTML = ''; // Clear previous images
+            let currentPage;
+
+            for (let i = 0; i < files.length; i++) {
+                // Create a new page every 9 photos
+                if (i % 9 === 0) {
+                    currentPage = document.createElement('div');
+                    currentPage.className = 'page';
+                    photoGridContainer.appendChild(currentPage);
+                }
+
+                const file = files[i];
+                const reader = new FileReader();
+
+                reader.onload = (e) => {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+
+                    const slot = document.createElement('div');
+                    slot.className = 'photo-slot';
+                    slot.appendChild(img);
+
+                    currentPage.appendChild(slot);
+                };
+
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>
