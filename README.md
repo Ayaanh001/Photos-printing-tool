@@ -30,9 +30,7 @@ This tool brings back the convenience — especially useful for printing **walle
 1. **Download** the `photo-print-tool.html` file from this repository.
 2. **Open** it in your web browser (Chrome, Edge, Firefox, etc.).
 3. **Upload** the photos you want to print.
-4. In the print window:
-   - Select **Landscape orientation**.
-   - Adjust print settings (size, quality, etc.) if needed.
+4. In the print window:  Select **Landscape orientation** and Adjust print settings (size, quality, etc.) if needed.
 6. **Print and enjoy!**
 
 ## **Coming Soon**
