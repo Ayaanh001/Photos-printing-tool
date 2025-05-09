@@ -37,7 +37,7 @@ This tool brings back the convenience — especially useful for printing **walle
 
 ## **Coming Soon**
 
-- Support for more photo sizes (13x18(2), 20x25cm(1),9x13cm (4), etc.)  
+- Support for more photo sizes 13x18(2), 20x25cm(1),9x13cm (4), etc.  
 - Option to choose number of **copies**
 - Fit to Frame feature
 - Enhanced mobile experience
