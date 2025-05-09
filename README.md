@@ -6,8 +6,8 @@ Print wallet-size and other photo sizes easily from your phone or PC
 
 <picture>
     <!-- Avoid image being clickable with slight workaround -->
-    <source media="(prefers-color-scheme: dark)" srcset="/Assests/device-frame.png" width="250px">
-    <img alt="Photo Printing Tool" src="/Assests/device-frame.png" width="250px">
+    <source media="(prefers-color-scheme: dark)" srcset="/Assests/device-frame.png" width="230px">
+    <img alt="Photo Printing Tool" src="/Assests/device-frame.png" width="230px">
 </picture>
 
 **Photo Printing Tool** is a lightweight web app built to solve a common issue: printing wallet-size or custom-sized photos directly from your **phone** or **Windows 11 PC**.
@@ -37,7 +37,7 @@ This tool brings back the convenience — especially useful for printing **walle
 
 ## **Coming Soon**
 
-- Support for more photo sizes (13*18(2), 20*25cm (1),9*13cm (4), etc.)  
+- Support for more photo sizes (13x18(2), 20x25cm(1),9x13cm (4), etc.)  
 - Option to choose number of **copies**
 - Fit to Frame feature
 - Enhanced mobile experience
