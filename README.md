@@ -33,16 +33,24 @@ This tool brings back the convenience — especially useful for printing **walle
 4. In the print window:
    - Select **Landscape orientation**.
    - Adjust print settings (size, quality, etc.) if needed.
-5. **Print and enjoy!**
+6. **Print and enjoy!**
 
 ## **Coming Soon**
 
-- Support for more photo sizes 13x18(2), 20x25cm(1),9x13cm (4), etc.  
+- Support for more photo sizes 13x18cm (2), 20x25cm (1), 9x13cm (4), etc.  
 - Option to choose number of **copies**
 - Fit to Frame feature
 - Enhanced mobile experience
 
-## **Contribute**
+<h2>Questions? Need Help? Found a bug?</h2>
 
-Want to help improve this tool?  
-Feel free to **fork** the repo, open an [issue](https://github.com/Ayaanh001/photo-printing-tool/issues), or submit a **pull request**!
+<p>If you've got questions about setup, deploying, special feature implementation, or just want to chat with the developer, please feel free to contact me via <a href="mailto:hayaan554@gmail.com">email</a>.</p>
+
+<p>Found a bug? Go ahead and <a href="https://github.com/Ayaanh001/Photos-printing-tool/issues">submit an issue</a>. And, of course, feel free to submit pull requests with bug fixes or changes to the dev branch.</p>
+
+## Contact
+
+For any questions, feedback, or inquiries, please contact:
+
+- Name: Ayaan Hussain
+- Email: hayaan554@gmail.com
