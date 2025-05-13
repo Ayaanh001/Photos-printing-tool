@@ -18,12 +18,14 @@ This tool brings back the convenience — especially useful for printing **walle
 
 ## **Features**
 
-- Print **wallet-size** and custom-size photos  
+- Print **wallet-size** and custom-size photos
+- **Preview box** shows how photos will appear on paper
 - Works on **phones, tablets, and PCs**  
-- Great for **kids' school project work**  
+- Great for **kids school project work**  
 - Clean and simple drag-and-drop interface  
 - Compatible with **Windows 11** and older  
-- **No installation** required — works fully offline
+- Works fully **offline**
+
 
 ## **How to Use**
 
